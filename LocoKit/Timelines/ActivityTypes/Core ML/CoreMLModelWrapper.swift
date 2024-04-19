@@ -250,7 +250,7 @@ public class CoreMLModelWrapper: DiscreteClassifier, PersistableRecord, Hashable
     public func classify(_ classifiable: ActivityTypeClassifiable) -> ClassifierResults {
         guard let model else {
             totalSamples = 0 // if file used to exist, sample count will be wrong and will cause incorrect weighting
-            print("[\(geoKey)] classify(classifiable:) NO MODEL!")
+//            print("[\(geoKey)] classify(classifiable:) NO MODEL!")
             return ClassifierResults(results: [], moreComing: false)
         }
         let input = classifiable.coreMLFeatureProvider
