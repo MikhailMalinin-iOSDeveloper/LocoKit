@@ -1005,6 +1005,13 @@ import CoreLocation
         locationManagerDelegate?.locationManager?(manager, didExitRegion: region)
     }
     
+    @available(iOS, introduced: 4.2, deprecated: 14.0, message: "Use locationManagerDidChangeAuthorization instead")
+    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        // forward the delegate event
+        locationManagerDelegate?.locationManager?(manager, didChangeAuthorization: status)
+    }
+    
+    @available(iOS 14.0, *)
     public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         // broadcast a notification
         let note = Notification(name: .didChangeAuthorizationStatus, object: self, userInfo: ["status": manager.authorizationStatus])
