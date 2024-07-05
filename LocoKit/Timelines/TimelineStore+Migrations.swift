@@ -314,11 +314,13 @@ public extension TimelineStore {
                         SELECT MIN(date)
                         FROM LocomotionSample
                         WHERE timelineItemId = NEW.timelineItemId
+                        AND LocomotionSample.disabled = TimelineItem.disabled
                     ),
                     endDate = (
                         SELECT MAX(date)
                         FROM LocomotionSample
                         WHERE timelineItemId = NEW.timelineItemId
+                        AND LocomotionSample.disabled = TimelineItem.disabled
                     )
                     WHERE itemId = NEW.timelineItemId;
                 END;
@@ -335,11 +337,13 @@ public extension TimelineStore {
                         SELECT MIN(date)
                         FROM LocomotionSample
                         WHERE timelineItemId = NEW.timelineItemId
+                        AND LocomotionSample.disabled = TimelineItem.disabled
                     ),
                     endDate = (
                         SELECT MAX(date)
                         FROM LocomotionSample
                         WHERE timelineItemId = NEW.timelineItemId
+                        AND LocomotionSample.disabled = TimelineItem.disabled
                     )
                     WHERE itemId = NEW.timelineItemId;
                 END;
@@ -356,11 +360,13 @@ public extension TimelineStore {
                         SELECT MIN(date)
                         FROM LocomotionSample
                         WHERE timelineItemId = OLD.timelineItemId
+                        AND LocomotionSample.disabled = TimelineItem.disabled
                     ),
                     endDate = (
                         SELECT MAX(date)
                         FROM LocomotionSample
                         WHERE timelineItemId = OLD.timelineItemId
+                        AND LocomotionSample.disabled = TimelineItem.disabled
                     )
                     WHERE itemId = OLD.timelineItemId;
                 END;
