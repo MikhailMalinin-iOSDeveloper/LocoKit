@@ -1071,5 +1071,9 @@ import CoreLocation
         // the payoff
         if addedLocations { updateAndNotify() }
     }
+    
+    public func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        locationManagerDelegate?.locationManager?(manager, didUpdateHeading: newHeading)
+    }
 
 }
