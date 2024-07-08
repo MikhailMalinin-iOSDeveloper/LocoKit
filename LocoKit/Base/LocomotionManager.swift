@@ -755,6 +755,9 @@ import CoreLocation
         // hand over to new manager
         freshManager.startUpdatingLocation()
         locationManager.stopUpdatingLocation()
+        // TODO: - start updates if heading needed
+        freshManager.startUpdatingHeading()
+        locationManager.stopUpdatingHeading()
         locationManager = freshManager
 
         logger.fault("Recreated the LocationManager")
