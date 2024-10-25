@@ -819,7 +819,6 @@ import CoreLocation
                 logger.error("\(String(describing: error))")
                 
             } else if let motion = motion {
-                log.debug("LocoKit: Motion updated: \(motion.debugDescription)")
                 self.coreMotionPermission = true
                 ActivityBrain.highlander.add(deviceMotion: motion)
             }
