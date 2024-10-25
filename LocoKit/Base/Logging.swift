@@ -6,6 +6,9 @@
 //
 
 import Foundation
+import SwiftyBeaver
 import OSLog
 
 let logger = Logger(subsystem: "com.bigpaua.LocoKit", category: "LocoKit")
+
+let log = SwiftyBeaver.self

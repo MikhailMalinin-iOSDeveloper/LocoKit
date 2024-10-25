@@ -508,6 +508,8 @@ import CoreLocation
 
         // make sure we're allowed to use sleep mode
         guard useLowPowerSleepModeWhileStationary else { return }
+        
+        log.debug("LocoKit: started sleeping")
 
         // notify that we're going to sleep
         NotificationCenter.default.post(Notification(name: .willStartSleepMode, object: self, userInfo: nil))
@@ -599,6 +601,8 @@ import CoreLocation
     @objc public func startWakeup() {
         if recordingState == .wakeup { return }
         if recordingState == .recording { return }
+        
+        log.debug("LocoKit: started wakeup")
 
         // make the location manager receptive again
         locationManager.desiredAccuracy = maximumDesiredLocationAccuracy
@@ -781,6 +785,7 @@ import CoreLocation
                 logger.error("\(String(describing: error))")
                 
             } else if let pedoData = pedoData {
+                log.debug("LocoKit: Pedometer updated: \(pedoData.numberOfSteps)")
                 ActivityBrain.highlander.add(pedoData: pedoData)
             }
         }
@@ -814,6 +819,7 @@ import CoreLocation
                 logger.error("\(String(describing: error))")
                 
             } else if let motion = motion {
+                log.debug("LocoKit: Motion updated: \(motion.debugDescription)")
                 self.coreMotionPermission = true
                 ActivityBrain.highlander.add(deviceMotion: motion)
             }
@@ -909,6 +915,8 @@ import CoreLocation
 
         // reset the fallback timer
         restartTheUpdateTimer()
+        
+        log.debug("LocoKit: updated moving state to \(movingState.rawValue)")
 
         // notify on moving state changes
         if movingState != previousState {
@@ -1042,6 +1050,7 @@ import CoreLocation
         // broadcast a notification
         let note = Notification(name: .didUpdateLocations, object: self, userInfo: ["locations": locations])
         NotificationCenter.default.post(note)
+        log.debug("LocoKit: didUpdateLocations \(locations), delegate \(locationManagerDelegate.debugDescription)")
 
         // forward the delegate event
         locationManagerDelegate?.locationManager?(manager, didUpdateLocations: locations)
