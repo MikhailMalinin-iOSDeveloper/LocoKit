@@ -140,6 +140,10 @@ import CoreLocation
      */
     @objc public var maximumDesiredLocationAccuracy: CLLocationAccuracy = 10
 
+    @objc public var distanceFilter: CLLocationDistance = kCLDistanceFilterNone
+
+    @objc public var distanceFilterWhileSleepOrStandby: CLLocationDistance = kCLDistanceFilterNone
+
     /**
      Whether LocomotionManager should dynamically adjust the internal CLLocationManager's `desiredAccuracy` to best
      match local conditions. It is recommended to leave this enabled, to avoid wasteful GPS energy use inside
@@ -323,7 +327,7 @@ import CoreLocation
         // start updating locations
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.desiredAccuracy = maximumDesiredLocationAccuracy
-        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.distanceFilter = distanceFilter
         locationManager.startUpdatingLocation()
 
         // start the motion gimps
@@ -479,7 +483,7 @@ import CoreLocation
         lastLocationManagerCreated = Date()
 
         let manager = CLLocationManager()
-        manager.distanceFilter = kCLDistanceFilterNone
+        manager.distanceFilter = distanceFilter
         manager.desiredAccuracy = self.maximumDesiredLocationAccuracy
         manager.showsBackgroundLocationIndicator = showsBackgroundLocationIndicator
         manager.pausesLocationUpdatesAutomatically = false
@@ -533,7 +537,7 @@ import CoreLocation
 
         } else { // inefficient, but no annoying status bar / dynamic island indicator
             locationManager.desiredAccuracy = 999
-            locationManager.distanceFilter = kCLDistanceFilterNone
+            locationManager.distanceFilter = distanceFilterWhileSleepOrStandby
         }
 
         // no fallback updates while sleeping
@@ -651,7 +655,7 @@ import CoreLocation
 
         } else { // inefficient, but no annoying status bar / dynamic island indicator
             locationManager.desiredAccuracy = 999
-            locationManager.distanceFilter = kCLDistanceFilterNone
+            locationManager.distanceFilter = distanceFilterWhileSleepOrStandby
         }
 
         // make sure the location manager is alive
