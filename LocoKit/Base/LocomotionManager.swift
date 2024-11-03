@@ -768,6 +768,7 @@ import CoreLocation
         locationManager.stopUpdatingHeading()
         locationManager = freshManager
 
+        NotificationCenter.default.post(Notification(name: .recreatedRecording, object: self, userInfo: nil))
         logger.fault("Recreated the LocationManager")
     }
 
