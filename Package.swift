@@ -11,14 +11,13 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/alejandro-isaza/Upsurge.git", from: "0.11.0"),
-        .package(name: "GRDB", url: "https://github.com/groue/GRDB.swift.git", from: "6.29.3"),
-        .package(name: "FlatBuffers", url: "https://github.com/mustiikhalil/flatbuffers", from: "0.8.1"),
-        .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver", from: "2.1.0")
+        .package(name: "GRDB", url: "https://github.com/groue/GRDB.swift.git", from: "6.0.0"),
+        .package(name: "FlatBuffers", url: "https://github.com/mustiikhalil/flatbuffers", from: "0.8.1")
     ],
     targets: [
         .target(
             name: "LocoKit",
-            dependencies: ["Upsurge", "GRDB", "FlatBuffers", "SwiftyBeaver"],
+            dependencies: ["Upsurge", "GRDB", "FlatBuffers"], 
             path: "LocoKit",
             exclude: ["Base/Strings", "Timelines/ActivityTypes/CoordinateBins.fbs"]
         )

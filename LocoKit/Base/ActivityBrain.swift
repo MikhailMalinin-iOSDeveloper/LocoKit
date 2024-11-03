@@ -106,8 +106,6 @@ public extension ActivityBrain {
 
         // the payoff
         updateMoving()
-        
-        log.debug("LocoKit: updated presentSample: \(presentSample.location.debugDescription)")
 
         // if present is big enough, unfreeze the past
         if pastSampleFrozen && presentSample.n >= dynamicMinimumConfidenceN {
