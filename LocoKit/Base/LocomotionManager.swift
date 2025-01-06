@@ -79,6 +79,16 @@ import CoreLocation
         }
     }
 
+    public var headingUpdatingEnabled = false {
+        didSet {
+            if headingUpdatingEnabled {
+                locationManager.startUpdatingHeading()
+            } else {
+                locationManager.stopUpdatingHeading()
+            }
+        }
+    }
+
     // internal states
     internal var watchingTheM = false
     internal var watchingThePedometer = false
@@ -140,7 +150,11 @@ import CoreLocation
      */
     @objc public var maximumDesiredLocationAccuracy: CLLocationAccuracy = 10
 
-    @objc public var distanceFilter: CLLocationDistance = kCLDistanceFilterNone
+    @objc public var distanceFilter: CLLocationDistance = kCLDistanceFilterNone {
+        didSet {
+            locationManager.distanceFilter = distanceFilter
+        }
+    }
 
     @objc public var distanceFilterWhileSleepOrStandby: CLLocationDistance = kCLDistanceFilterNone
 
@@ -243,7 +257,7 @@ import CoreLocation
 
     @objc public var standbyCycleDuration: TimeInterval = 60 * 2
 
-    public var showsBackgroundLocationIndicator: Bool = true {
+    public var showsBackgroundLocationIndicator: Bool = false {
         didSet {
             locationManager.showsBackgroundLocationIndicator = self.showsBackgroundLocationIndicator
         }
@@ -366,6 +380,7 @@ import CoreLocation
 
         // stop the location manager
         locationManager.stopUpdatingLocation()
+        locationManager.stopUpdatingHeading()
 
         // stop the motion gimps
         stopCoreMotion()
@@ -376,7 +391,7 @@ import CoreLocation
 
         recordingState = .off
     }
-    
+
     /**
      Reset the internal state of the location Kalman filters. When the next raw location arrives, `filteredLocation` 
      will be identical to the raw location.
@@ -487,6 +502,10 @@ import CoreLocation
         manager.desiredAccuracy = self.maximumDesiredLocationAccuracy
         manager.showsBackgroundLocationIndicator = showsBackgroundLocationIndicator
         manager.pausesLocationUpdatesAutomatically = false
+
+        if headingUpdatingEnabled {
+            manager.startUpdatingHeading()
+        }
 
         manager.delegate = self
 
@@ -760,7 +779,9 @@ import CoreLocation
         freshManager.startUpdatingLocation()
         locationManager.stopUpdatingLocation()
         // TODO: - start updates if heading needed
-        freshManager.startUpdatingHeading()
+        if headingUpdatingEnabled {
+            freshManager.startUpdatingHeading()
+        }
         locationManager.stopUpdatingHeading()
         locationManager = freshManager
 
